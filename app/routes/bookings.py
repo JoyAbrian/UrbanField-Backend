@@ -1,21 +1,35 @@
 from flask import request, jsonify
 from app import app, db
-from app.models import Booking
-
-from flask import request
+from app.models import Booking, User, Field, PaymentMethod
 
 @app.route('/bookings', methods=['POST', 'GET', 'PUT', 'DELETE'])
 def manage_bookings():
     if request.method == 'POST':
         data = request.json
-        new_booking = Booking(user_id=data['user_id'], field_id=data['field_id'], start_date=data['start_date'], end_date=data['end_date'], total_price=data['total_price'])
+        new_booking = Booking(
+            user_id=data['user_id'],
+            field_id=data['field_id'],
+            date=data['date'],
+            time=data['time'],
+            payment_method_id=data['payment_method_id']
+        )
         db.session.add(new_booking)
         db.session.commit()
         return jsonify({"message": "Booking created successfully"}), 201
     
     elif request.method == 'GET':
         bookings = Booking.query.all()
-        bookings_list = [{"id": booking.id, "user_id": booking.user_id, "field_id": booking.field_id, "start_date": booking.start_date, "end_date": booking.end_date, "total_price": booking.total_price} for booking in bookings]
+        bookings_list = [
+            {
+                "id": booking.id,
+                "user_id": booking.user_id,
+                "field_id": booking.field_id,
+                "date": booking.date,
+                "time": booking.time,
+                "payment_method_id": booking.payment_method_id
+            }
+            for booking in bookings
+        ]
         return jsonify(bookings_list), 200
 
     elif request.method == 'PUT':
@@ -25,9 +39,9 @@ def manage_bookings():
         if booking:
             booking.user_id = data.get('user_id', booking.user_id)
             booking.field_id = data.get('field_id', booking.field_id)
-            booking.start_date = data.get('start_date', booking.start_date)
-            booking.end_date = data.get('end_date', booking.end_date)
-            booking.total_price = data.get('total_price', booking.total_price)
+            booking.date = data.get('date', booking.date)
+            booking.time = data.get('time', booking.time)
+            booking.payment_method_id = data.get('payment_method_id', booking.payment_method_id)
             db.session.commit()
             return jsonify({"message": "Booking updated successfully"}), 200
         else:
