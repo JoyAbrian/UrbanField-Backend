@@ -12,7 +12,7 @@ INSERT INTO users (username, password, user_document, role, email, phone_number)
     ('charlie_brown', 'charlie_password', NULL, 'customer', 'charlie.brown@example.com', '+1219876543'),
     ('david_cole', 'david_password', NULL, 'customer', 'david.cole@example.com', '+1198765432'),
     ('emily_davis', 'emily_password', NULL, 'customer', 'emily.davis@example.com', '+1098765432'),
-    ('frank_thomas', 'frank_password', NULL, 'customer', 'frank.thomas@example.com', '+1987654321'),
+    ('frank_thomas', 'frank_password', NULL, 'customer', 'frank.thomas@example.com', '+1987654320'),
     ('grace_miller', 'grace_password', NULL, 'customer', 'grace.miller@example.com', '+1876543210'),
     ('henry_wilson', 'henry_password', NULL, 'customer', 'henry.wilson@example.com', '+1765432109'),
     ('isabella_scott', 'isabella_password', NULL, 'customer', 'isabella.scott@example.com', '+1654321098'),
@@ -20,8 +20,8 @@ INSERT INTO users (username, password, user_document, role, email, phone_number)
     ('kate_harris', 'kate_password', NULL, 'customer', 'kate.harris@example.com', '+1432109876'),
     ('leo_robinson', 'leo_password', NULL, 'customer', 'leo.robinson@example.com', '+1321098765'),
     ('mia_nguyen', 'mia_password', NULL, 'customer', 'mia.nguyen@example.com', '+1210987654'),
-    ('nathan_king', 'nathan_password', NULL, 'customer', 'nathan.king@example.com', '+1198765432'),
-    ('olivia_clark', 'olivia_password', NULL, 'customer', 'olivia.clark@example.com', '+1098765432');
+    ('nathan_king', 'nathan_password', NULL, 'customer', 'nathan.king@example.com', '+1198765430'),
+    ('olivia_clark', 'olivia_password', NULL, 'customer', 'olivia.clark@example.com', '+1098765430');
 
 -- Insert dummy data for field types
 INSERT INTO field_types (name) VALUES
