@@ -52,5 +52,70 @@ INSERT INTO facilities (name, icon) VALUES
     ('Kantin', 'img/facility/cafeIcon.png'),
     ('Toilet', 'img/facility/toiletIcon.png');
 
--- -- Insert dummy data for field facilities
--- INSERT INTO field_facility (field_id, facility_id) VALUES
+-- Insert dummy data for field facilities
+INSERT INTO field_facility (field_id, facility_id) VALUES
+    (1, 1), (1, 2), (1, 4), (1, 5),
+    (2, 1), (2, 3), (2, 4), (2, 5),
+    (3, 1), (3, 2), (3, 5),
+    (4, 2), (4, 5),
+    (5, 1), (5, 3),
+    (6, 1), (6, 3),
+    (7, 1), (7, 3),
+    (8, 1), (8, 3),
+    (9, 1), (9, 3),
+    (10, 1), (10, 3),
+    (11, 1), (11, 3),
+    (12, 1), (12, 3);
+
+-- Insert dummy data for field reviews
+INSERT INTO field_review (field_id, user_id, rating, review) VALUES
+    (1, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (1, 3, 4, 'Tempatnya bagus, tapi parkiran kurang luas'),
+    (2, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (2, 3, 4, 'Tempatnya bagus, tapi ruang ganti kurang luas'),
+    (3, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (3, 3, 4, 'Tempatnya bagus, tapi musholla kurang luas'),
+    (4, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (4, 3, 4, 'Tempatnya bagus, tapi kantin kurang luas'),
+    (5, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (5, 3, 4, 'Tempatnya bagus, tapi toilet kurang luas'),
+    (6, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (6, 3, 4, 'Tempatnya bagus, tapi parkiran kurang luas'),
+    (7, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (7, 3, 4, 'Tempatnya bagus, tapi ruang ganti kurang luas'),
+    (8, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (8, 3, 4, 'Tempatnya bagus, tapi musholla kurang luas'),
+    (9, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (9, 3, 4, 'Tempatnya bagus, tapi kantin kurang luas'),
+    (10, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (10, 3, 4, 'Tempatnya bagus, tapi toilet kurang luas'),
+    (11, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (11, 3, 4, 'Tempatnya bagus, tapi parkiran kurang luas'),
+    (12, 2, 5, 'Tempatnya bersih dan nyaman, recommended!'),
+    (12, 3, 4, 'Tempatnya bagus, tapi ruang ganti kurang luas');
+
+-- Insert dummy data for payment methods
+INSERT INTO payment_methods (method, icon) VALUES
+    ('BCA', 'img/payment/bca.png'),
+    ('BNI', 'img/payment/bni.png'),
+    ('BRI', 'img/payment/bri.png'),
+    ('GoPay', 'img/payment/gopay.png'),
+    ('OVO', 'img/payment/ovo.png'),
+    ('ShopeePay', 'img/payment/shopeepay.png'),
+    ('DANA', 'img/payment/dana.png'),
+    ('Qris', 'img/payment/qris.png');
+
+-- Insert dummy data for bookings
+INSERT INTO bookings (user_id, field_id, date, time, payment_method_id) VALUES
+    (1, 1, '2021-12-01 00:00:00', '09:00:00', 1),
+    (2, 2, '2021-12-01 00:00:00', '10:00:00', 2),
+    (3, 3, '2021-12-01 00:00:00', '11:00:00', 3),
+    (4, 4, '2021-12-01 00:00:00', '12:00:00', 4),
+    (5, 5, '2021-12-01 00:00:00', '13:00:00', 5),
+    (6, 6, '2021-12-01 00:00:00', '14:00:00', 6),
+    (7, 7, '2021-12-01 00:00:00', '15:00:00', 7),
+    (8, 8, '2021-12-01 00:00:00', '16:00:00', 8),
+    (9, 9, '2021-12-01 00:00:00', '17:00:00', 1),
+    (10, 10, '2021-12-01 00:00:00', '18:00:00', 2),
+    (11, 11, '2021-12-01 00:00:00', '19:00:00', 3),
+    (12, 12, '2021-12-01 00:00:00', '20:00:00', 4);
