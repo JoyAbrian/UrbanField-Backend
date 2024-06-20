@@ -6,14 +6,26 @@ from app.models import Payment
 def manage_payments():
     if request.method == 'POST':
         data = request.json
-        new_payment = Payment(booking_id=data['booking_id'], amount=data['amount'], payment_date=data['payment_date'])
+        new_payment = Payment(
+            booking_id=data['booking_id'],
+            amount=data['amount'],
+            payment_date=data['payment_date']
+        )
         db.session.add(new_payment)
         db.session.commit()
         return jsonify({"message": "Payment created successfully"}), 201
     
     elif request.method == 'GET':
         payments = Payment.query.all()
-        payments_list = [{"id": payment.id, "booking_id": payment.booking_id, "amount": payment.amount, "payment_date": payment.payment_date} for payment in payments]
+        payments_list = [
+            {
+                "id": payment.id,
+                "booking_id": payment.booking_id,
+                "amount": payment.amount,
+                "payment_date": payment.payment_date.strftime('%Y-%m-%d %H:%M:%S')  # Format datetime as string
+            }
+            for payment in payments
+        ]
         return jsonify(payments_list), 200
 
     elif request.method == 'PUT':
