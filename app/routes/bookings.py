@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from app import app, db
 from app.models import Booking, User, Field, PaymentMethod
+import datetime
 
 @app.route('/bookings', methods=['POST', 'GET', 'PUT', 'DELETE'])
 def manage_bookings():
@@ -10,7 +11,7 @@ def manage_bookings():
             user_id=data['user_id'],
             field_id=data['field_id'],
             date=data['date'],
-            time=data['time'],
+            time=datetime.datetime.strptime(data['time'], '%H:%M').time(),  # Parse time string to datetime.time
             payment_method_id=data['payment_method_id']
         )
         db.session.add(new_booking)
@@ -19,17 +20,23 @@ def manage_bookings():
     
     elif request.method == 'GET':
         bookings = Booking.query.all()
-        bookings_list = [
-            {
+        bookings_list = []
+        for booking in bookings:
+            user = User.query.get(booking.user_id)
+            field = Field.query.get(booking.field_id)
+            payment = PaymentMethod.query.get(booking.payment_method_id)
+            booking_data = {
                 "id": booking.id,
                 "user_id": booking.user_id,
+                "user_name": user.username,
                 "field_id": booking.field_id,
+                "field_name": field.name,
                 "date": booking.date,
-                "time": booking.time,
-                "payment_method_id": booking.payment_method_id
+                "time": booking.time.strftime('%H:%M'),
+                "payment_method_id": booking.payment_method_id,
+                "payment_method_name": payment.method
             }
-            for booking in bookings
-        ]
+            bookings_list.append(booking_data)
         return jsonify(bookings_list), 200
 
     elif request.method == 'PUT':
@@ -40,7 +47,7 @@ def manage_bookings():
             booking.user_id = data.get('user_id', booking.user_id)
             booking.field_id = data.get('field_id', booking.field_id)
             booking.date = data.get('date', booking.date)
-            booking.time = data.get('time', booking.time)
+            booking.time = datetime.datetime.strptime(data['time'], '%H:%M').time()  # Parse time string to datetime.time
             booking.payment_method_id = data.get('payment_method_id', booking.payment_method_id)
             db.session.commit()
             return jsonify({"message": "Booking updated successfully"}), 200

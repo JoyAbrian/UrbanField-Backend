@@ -1,12 +1,10 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from app.models import User, UserDocument
-from app import db
-
-users_bp = Blueprint('users_bp', __name__)
+from app import app, db
+from app.models import User  # Assuming User model is imported correctly
 
 # Create a new user
-@users_bp.route('/users', methods=['POST'])
+@app.route('/users', methods=['POST'])
 def create_user():
     data = request.json
     new_user = User(
@@ -21,14 +19,23 @@ def create_user():
     return jsonify({"message": "User created successfully"}), 201
 
 # Get all users
-@users_bp.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET'])
 def get_all_users():
     users = User.query.all()
-    users_list = [{"id": user.id, "username": user.username, "email": user.email, "phone_number": user.phone_number, "role": user.role} for user in users]
+    users_list = [
+        {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "phone_number": user.phone_number,
+            "role": user.role
+        }
+        for user in users
+    ]
     return jsonify(users_list), 200
 
 # Update a user
-@users_bp.route('/users/<int:user_id>', methods=['PUT'])
+@app.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.json
     user = User.query.get(user_id)
@@ -44,7 +51,7 @@ def update_user(user_id):
         return jsonify({"error": "User not found"}), 404
 
 # Delete a user
-@users_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = User.query.get(user_id)
     if user:
@@ -55,7 +62,7 @@ def delete_user(user_id):
         return jsonify({"error": "User not found"}), 404
 
 # Login route
-@users_bp.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
     username = request.json['username']
     password = request.json['password']
@@ -69,7 +76,7 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 # User profile route
-@users_bp.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET'])
 @jwt_required()
 def profile():
     current_user_username = get_jwt_identity()
@@ -80,15 +87,13 @@ def profile():
         return jsonify({"message": "User not found"}), 404
 
 # Endpoint to handle user document uploads
-@users_bp.route('/users/<int:user_id>/documents', methods=['POST'])
+@app.route('/users/<int:user_id>/documents', methods=['POST'])
 @jwt_required()
 def upload_user_document(user_id):
     current_user_username = get_jwt_identity()
     if current_user_username:
         user = User.query.filter_by(username=current_user_username).first()
         if user and user.id == user_id:
-            # Assuming file upload handling logic here
-            # For simplicity, just returning a success message
             return jsonify({"message": "Document uploaded successfully"}), 200
         else:
             return jsonify({"error": "Unauthorized"}), 401

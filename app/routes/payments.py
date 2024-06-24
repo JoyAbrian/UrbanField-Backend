@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app import app, db
-from app.models import Payment
+from app.models import PaymentMethod
 
 @app.route('/payments', methods=['POST', 'GET', 'PUT', 'DELETE'])
 def manage_payments():

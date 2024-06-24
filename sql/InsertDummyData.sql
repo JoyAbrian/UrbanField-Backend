@@ -2,7 +2,13 @@ USE urban_fields;
 
 -- Insert dummy data for users
 INSERT INTO users (username, password, user_document, role, email, phone_number) VALUES
-    ('admin_user', 'admin_password', NULL, 'admin', 'admin@example.com', '+1234567890'),
+    ('admin_user', 'admin_password', NULL, 'admin', 'admin1@example.com', '+1234567890'),
+    ('admin_user2','admin_pasword', NULL, 'admin', 'admin2@example.com', '+6282345653879'),
+    ('admin_user3', 'admin_password', NULL, 'admin', 'admin3@example.com', '+6285551234567'),
+    ('admin_user4', 'admin_password', NULL, 'admin', 'admin4@example.com', '+6235551234567'),
+    ('alexsmith_admin', 'password321', NULL, 'admin', 'alexsmith@example.com', '+6285546667771'),
+    ('janedoe_admin', 'securepass123', NULL, 'admin', 'janedoe@example.com', '+6287774889990'),
+    ('johndoe_admin', 'admin123', NULL, 'admin', 'johndoe@example.com', '+6289876543210'),
     ('customer1', 'customer_password1', NULL, 'customer', 'customer1@example.com', '+1987654321'),
     ('customer2', 'customer_password2', NULL, 'customer', 'customer2@example.com', '+1765432987'),
     ('john_doe', 'john_password', NULL, 'customer', 'john.doe@example.com', '+1654321987'),
