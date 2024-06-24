@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app import app, db
-from app.models import Field, FieldType
+from app.models import Field, FieldType, Facility, FieldFacility
 
 @app.route('/fields', methods=['POST', 'GET'])
 @app.route('/fields/<int:field_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -99,3 +99,16 @@ def manage_fields(field_id=None):
             return jsonify({"message": "Field deleted successfully"}), 200
         else:
             return jsonify({"error": "Field not found"}), 404
+
+@app.route('/fields/<int:field_id>/facilities', methods=['GET'])
+def get_field_facilities(field_id):
+    field = Field.query.get(field_id)
+    if not field:
+        return jsonify({"error": "Field not found"}), 404
+    
+    facilities = Facility.query.join(FieldFacility, Facility.id == FieldFacility.facility_id)\
+        .filter(FieldFacility.field_id == field_id)\
+        .all()
+    
+    facilities_list = [{"id": facility.id, "name": facility.name, "icon": facility.icon} for facility in facilities]
+    return jsonify(facilities_list), 200
