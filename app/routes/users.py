@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app import app, db
-from app.models import User  # Assuming User model is imported correctly
+from app.models import User
 
 # Create a new user
 @app.route('/users', methods=['POST'])
