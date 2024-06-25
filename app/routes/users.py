@@ -12,7 +12,7 @@ def create_user():
         password=data['password'],
         email=data['email'],
         phone_number=data['phone_number'],
-        role=data['role']
+        role=data.get('role', 'customer')
     )
     db.session.add(new_user)
     db.session.commit()
