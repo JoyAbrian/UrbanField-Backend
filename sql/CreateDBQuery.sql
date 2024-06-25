@@ -27,7 +27,7 @@ CREATE TABLE fields (
     image_url VARCHAR(255) NOT NULL,
     image_url2 VARCHAR(255) NOT NULL,
     image_url3 VARCHAR(255) NOT NULL,
-    price_per_hour DECIMAL(10, 2) NOT NULL,
+    price_per_hour INT(10) NOT NULL,
     opening_time TIME NOT NULL,
     closing_time TIME NOT NULL,
     FOREIGN KEY (type_id) REFERENCES field_types(id)
