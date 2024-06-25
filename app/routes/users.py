@@ -64,13 +64,13 @@ def delete_user(user_id):
 # Login route
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.json['username']
+    email = request.json['email']
     password = request.json['password']
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
 
     if user and user.password == password:
-        access_token = create_access_token(identity=user.username)
+        access_token = create_access_token(identity=user.email)
         return jsonify({"message": "Login successful", "access_token": access_token}), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401
