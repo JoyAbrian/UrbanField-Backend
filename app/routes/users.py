@@ -80,9 +80,7 @@ def delete_user(user_id):
 def login():
     email = request.json['email']
     password = request.json['password']
-
     user = User.query.filter_by(email=email).first()
-
     if user and user.password == password:
         access_token = create_access_token(identity=user.id)
         return jsonify({"message": "Login successful", "access_token": access_token}), 200

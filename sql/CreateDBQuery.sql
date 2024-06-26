@@ -30,7 +30,7 @@ CREATE TABLE fields (
     price_per_hour INT(10) NOT NULL,
     opening_time TIME NOT NULL,
     closing_time TIME NOT NULL,
-    FOREIGN KEY (type_id) REFERENCES field_types(id)
+    FOREIGN KEY (type_id) REFERENCES field_types(id) ON DELETE CASCADE
 );
 
 CREATE TABLE facilities (
@@ -43,8 +43,8 @@ CREATE TABLE field_facility (
     id INT PRIMARY KEY AUTO_INCREMENT,
     field_id INT NOT NULL,
     facility_id INT NOT NULL,
-    FOREIGN KEY (field_id) REFERENCES fields(id),
-    FOREIGN KEY (facility_id) REFERENCES facilities(id)
+    FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE,
+    FOREIGN KEY (facility_id) REFERENCES facilities(id) ON DELETE CASCADE
 );
 
 CREATE TABLE field_review (
@@ -53,8 +53,8 @@ CREATE TABLE field_review (
     user_id INT NOT NULL,
     rating INT NOT NULL,
     review TEXT NOT NULL,
-    FOREIGN KEY (field_id) REFERENCES fields(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE payment_methods (
@@ -70,7 +70,7 @@ CREATE TABLE bookings (
     date DATETIME NOT NULL,
     time TIME NOT NULL,
     payment_method_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (field_id) REFERENCES fields(id),
-    FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE,
+    FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id) ON DELETE CASCADE
 );

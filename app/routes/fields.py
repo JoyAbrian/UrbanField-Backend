@@ -18,7 +18,7 @@ def manage_fields(field_id=None):
             image_url3=data.get('image_url3'),
             price_per_hour=data['price_per_hour'],
             opening_time=data.get('opening_time'),
-            closing_time=data.get('closing_time'),
+            closing_time=data.get('closing_time')
         )
         db.session.add(new_field)
         db.session.commit()
