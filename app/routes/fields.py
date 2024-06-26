@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from app import app, db
-from app.models import Field, FieldType, Facility, FieldFacility
+from app.models import Field, FieldType, Facility, FieldFacility, FieldReview
 
 @app.route('/fields', methods=['POST', 'GET'])
 @app.route('/fields/<int:field_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -112,3 +112,14 @@ def get_field_facilities(field_id):
     
     facilities_list = [{"id": facility.id, "name": facility.name, "icon": facility.icon} for facility in facilities]
     return jsonify(facilities_list), 200
+
+@app.route('/fields/<int:field_id>/reviews', methods=['GET'])
+def get_field_reviews(field_id):
+    reviews = FieldReview.query.filter_by(field_id=field_id).all()
+    reviews_list = [{
+        "id": review.id,
+        "user_id": review.user_id,
+        "rating": review.rating,
+        "review": review.review
+    } for review in reviews]
+    return jsonify(reviews_list), 200

@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from app import app, db
-from app.models import User  # Assuming User model is imported correctly
+from app.models import User
 
 # Create a new user
 @app.route('/users', methods=['POST'])
@@ -12,7 +12,7 @@ def create_user():
         password=data['password'],
         email=data['email'],
         phone_number=data['phone_number'],
-        role=data['role']
+        role=data.get('role', 'customer')
     )
     db.session.add(new_user)
     db.session.commit()
@@ -50,6 +50,20 @@ def update_user(user_id):
     else:
         return jsonify({"error": "User not found"}), 404
 
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = User.query.get(user_id)
+    if user:
+        return jsonify({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "phone_number": user.phone_number,
+            "role": user.role
+        }), 200
+    else:
+        return jsonify({"message": "User not found"}), 404
+
 # Delete a user
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
@@ -64,13 +78,13 @@ def delete_user(user_id):
 # Login route
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.json['username']
+    email = request.json['email']
     password = request.json['password']
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
 
     if user and user.password == password:
-        access_token = create_access_token(identity=user.username)
+        access_token = create_access_token(identity=user.id)
         return jsonify({"message": "Login successful", "access_token": access_token}), 200
     else:
         return jsonify({"message": "Invalid credentials"}), 401
