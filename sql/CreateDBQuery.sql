@@ -67,7 +67,7 @@ CREATE TABLE bookings (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     field_id INT NOT NULL,
-    date DATETIME NOT NULL,
+    date DATE NOT NULL,
     time TIME NOT NULL,
     payment_method_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
